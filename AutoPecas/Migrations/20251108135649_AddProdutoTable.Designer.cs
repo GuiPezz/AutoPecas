@@ -3,6 +3,7 @@ using AutoPecas.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoPecas.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251108135649_AddProdutoTable")]
+    partial class AddProdutoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,23 +39,6 @@ namespace AutoPecas.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categorias");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Nome = "Motor"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Nome = "Freios"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Nome = "Suspensão"
-                        });
                 });
 
             modelBuilder.Entity("AutoPecas.Models.Produto", b =>
@@ -71,36 +57,13 @@ namespace AutoPecas.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Preco")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("Produtos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoriaId = 1,
-                            Nome = "Filtro de Óleo",
-                            Preco = 25.90m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoriaId = 2,
-                            Nome = "Pastilha de Freio",
-                            Preco = 120.00m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoriaId = 3,
-                            Nome = "Amortecedor Dianteiro",
-                            Preco = 340.00m
-                        });
                 });
 
             modelBuilder.Entity("AutoPecas.Models.Produto", b =>

@@ -1,0 +1,21 @@
+﻿@model AutoPecas.Models.Produto
+
+@{
+    ViewData["Title"] = "Excluir Produto";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Tem certeza que deseja excluir este produto?</h3>
+
+<div>
+    <h4>@Model.Nome</h4>
+    <p>Preço: @Model.Preco.ToString("C")</p>
+    <p>Categoria: @Model.Categoria?.Nome</p>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
