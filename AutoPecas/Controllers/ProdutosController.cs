@@ -1,7 +1,7 @@
-﻿using AutoPecas.Data;
-using AutoPecas.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoPecas.Data;
+using AutoPecas.Models;
 
 namespace AutoPecas.Controllers
 {
@@ -26,7 +26,6 @@ namespace AutoPecas.Controllers
         // GET: Produtos/Create
         public IActionResult Create()
         {
-            ViewBag.Categorias = _context.Categorias.ToList();
             return View();
         }
 
@@ -41,7 +40,6 @@ namespace AutoPecas.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Categorias = _context.Categorias.ToList();
             return View(produto);
         }
     }

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AutoPecas.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<h1 class="text-primary">Lista de Clientes</h1>
+
+@if (!Model.Any())
+{
+    <p>Nenhum cliente cadastrado.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th>Telefone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.Nome</td>
+                    <td>@cliente.Cpf</td>
+                    <td>@cliente.Email</td>
+                    <td>@cliente.Telefone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

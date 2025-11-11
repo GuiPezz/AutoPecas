@@ -2,14 +2,9 @@
 
 namespace AutoPecas.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController1 : Controller
     {
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

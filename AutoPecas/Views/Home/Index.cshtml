@@ -1,8 +1,75 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Início - João Auto Peças";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Seção principal -->
+<section class="text-center mt-5">
+    <div class="container">
+        <!-- Título e slogan -->
+        <h1 class="display-4 fw-bold text-primary">João Auto Peças</h1>
+        <p class="lead text-muted mb-4">
+            Qualidade, confiança e o melhor preço para o seu veículo!
+        </p>
+
+        <!-- Botões principais -->
+        <div class="d-flex justify-content-center gap-3 mb-5">
+            <a asp-controller="Produtos" asp-action="Index" class="btn btn-primary btn-lg px-4">
+                Ver Produtos
+            </a>
+            <a asp-controller="Categorias" asp-action="Index" class="btn btn-outline-primary btn-lg px-4">
+                Categorias
+            </a>
+        </div>
+
+        <!-- Banner visual -->
+        <img src="https://cdn.pixabay.com/photo/2017/02/22/18/03/car-vehicle-2087152_1280.png"
+             class="img-fluid rounded shadow-sm mb-5"
+             alt="Imagem ilustrativa de autopeças" style="max-width: 750px;">
+
+        <!-- Seções de destaque -->
+        <div class="row mt-5 text-start">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">🔧 Peças de Qualidade</h5>
+                        <p class="card-text text-muted">
+                            Trabalhamos com as melhores marcas para garantir segurança e durabilidade ao seu veículo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">🚗 Atendimento Especializado</h5>
+                        <p class="card-text text-muted">
+                            Nossa equipe está pronta para te ajudar a encontrar a peça certa para o seu carro.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">💰 Preços Imbatíveis</h5>
+                        <p class="card-text text-muted">
+                            Ofertas exclusivas e descontos especiais para oficinas e clientes fidelizados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção final -->
+        <div class="mt-5 p-4 bg-light rounded shadow-sm">
+            <h4 class="fw-bold text-primary">📞 Entre em contato</h4>
+            <p class="text-muted mb-1">📍 Endereço: Rua das Oficinas, 123 - São Miguel Arcanjo/SP</p>
+            <p class="text-muted mb-1">📞 Telefone: (15) 99999-9999</p>
+            <p class="text-muted">✉️ E-mail: atendimento@joaoautopecas.com.br</p>
+        </div>
+    </div>
+</section>
+
+<div style="height: 80px;"></div>

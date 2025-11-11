@@ -3,6 +3,7 @@ using AutoPecas.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoPecas.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251110225853_AdicionarCamposEstoque")]
+    partial class AdicionarCamposEstoque
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,47 +39,23 @@ namespace AutoPecas.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categorias");
-                });
 
-            modelBuilder.Entity("AutoPecas.Models.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Cidade")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cpf")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Endereco")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clientes");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Motor"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nome = "Freios"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nome = "Suspensão"
+                        });
                 });
 
             modelBuilder.Entity("AutoPecas.Models.Produto", b =>
@@ -108,6 +87,35 @@ namespace AutoPecas.Migrations
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("Produtos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoriaId = 1,
+                            EstoqueMinimo = 5,
+                            Nome = "Filtro de Óleo",
+                            Preco = 25.90m,
+                            QuantidadeEstoque = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoriaId = 2,
+                            EstoqueMinimo = 5,
+                            Nome = "Pastilha de Freio",
+                            Preco = 120.00m,
+                            QuantidadeEstoque = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoriaId = 3,
+                            EstoqueMinimo = 5,
+                            Nome = "Amortecedor Dianteiro",
+                            Preco = 340.00m,
+                            QuantidadeEstoque = 0
+                        });
                 });
 
             modelBuilder.Entity("AutoPecas.Models.Produto", b =>
