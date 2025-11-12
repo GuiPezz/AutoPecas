@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoPecas.Data;
 using AutoPecas.Models;
@@ -14,18 +15,27 @@ namespace AutoPecas.Controllers
             _context = context;
         }
 
-        // GET: Produtos
-        public async Task<IActionResult> Index()
+        // GET: /Produtos?searchString=...
+        public async Task<IActionResult> Index(string? searchString)
         {
-            var produtos = await _context.Produtos
-                .Include(p => p.Categoria)
-                .ToListAsync();
-            return View(produtos);
+            IQueryable<Produto> query = _context.Produtos
+                                                .Include(p => p.Categoria)
+                                                .AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                string term = searchString.Trim();
+                query = query.Where(p => p.Nome.Contains(term));
+            }
+
+            var lista = await query.ToListAsync();
+            return View(lista);
         }
 
         // GET: Produtos/Create
         public IActionResult Create()
         {
+            ViewBag.CategoriaId = new SelectList(_context.Categorias.AsNoTracking().ToList(), "Id", "Nome");
             return View();
         }
 
@@ -40,6 +50,9 @@ namespace AutoPecas.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            // Recarrega o dropdown se houver erro de validação
+            ViewBag.CategoriaId = new SelectList(_context.Categorias.AsNoTracking().ToList(), "Id", "Nome", produto.CategoriaId);
             return View(produto);
         }
     }
