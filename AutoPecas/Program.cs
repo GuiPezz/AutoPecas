@@ -16,9 +16,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Configura a conexão com o banco de dados SQL Server
-// 🔸 Certifique-se de que o appsettings.json tem a ConnectionString "DefaultConnection"
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// ==========================================
+// 🔹 CONFIGURAÇÕES DE SESSÃO (para carrinho)
+// ==========================================
+builder.Services.AddDistributedMemoryCache(); // Armazena sessão na memória
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(1); // Sessão expira em 1h
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // ==========================================
 // 🔹 CONSTRUÇÃO DA APLICAÇÃO
@@ -31,9 +41,7 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    // Página de erro customizada em produção
     app.UseExceptionHandler("/Home/Error");
-    // Segurança adicional (HTTPS estrito)
     app.UseHsts();
 }
 
@@ -43,17 +51,20 @@ app.UseHttpsRedirection();
 // Permite carregar arquivos estáticos (CSS, JS, imagens)
 app.UseStaticFiles();
 
-// Habilita o roteamento (para identificar controladores e ações)
+// Habilita o roteamento
 app.UseRouting();
 
-// (Opcional) Autorização — caso futuramente tenha login
+// ✅ Habilita sessão (necessário antes da autorização)
+app.UseSession();
+
+// (Opcional) Autorização
 app.UseAuthorization();
 
 // ==========================================
 // 🔹 CONFIGURAÇÃO DE ROTAS
 // ==========================================
 
-// Define a rota padrão — o site abre em ProdutosController / Index
+// Define a rota padrão — abre a página inicial
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
