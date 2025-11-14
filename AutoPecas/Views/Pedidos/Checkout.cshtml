@@ -1,0 +1,60 @@
+﻿@model AutoPecas.Models.PedidoViewModel
+@{
+    Layout = "_Layout";
+}
+
+
+
+<h2 class="text-center mb-4">🧾 Finalizar Pedido</h2>
+
+<div class="row">
+    <div class="col-md-7">
+
+        <h4>Dados do Cliente</h4>
+        <form asp-action="FinalizarPedido" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Nome completo</label>
+                <input asp-for="NomeCliente" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Endereço</label>
+                <input asp-for="Endereco" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Forma de Pagamento</label>
+                <select asp-for="Pagamento" class="form-select" required>
+                    <option>Pix</option>
+                    <option>Cartão de Crédito</option>
+                    <option>Cartão de Débito</option>
+                    <option>Dinheiro na entrega</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success mt-3 w-100">
+                Confirmar Pedido
+            </button>
+
+        </form>
+    </div>
+
+    <div class="col-md-5">
+        <h4>Resumo do Pedido</h4>
+        <ul class="list-group">
+            @foreach (var item in Model.ItensCarrinho)
+            {
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>@item.Produto.Nome (x@item.Quantidade)</span>
+                    <strong>@item.Subtotal.ToString("C")</strong>
+                </li>
+            }
+
+            <li class="list-group-item d-flex justify-content-between list-group-item-dark">
+                <strong>Total:</strong>
+                <strong>@Model.Total.ToString("C")</strong>
+            </li>
+        </ul>
+    </div>
+</div>

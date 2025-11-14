@@ -12,20 +12,18 @@ var builder = WebApplication.CreateBuilder(args);
 // 🔹 CONFIGURAÇÕES DE SERVIÇOS
 // ==========================================
 
-// Adiciona suporte a controladores e views (MVC)
+// MVC
 builder.Services.AddControllersWithViews();
 
-// Configura a conexão com o banco de dados SQL Server
+// Banco
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ==========================================
-// 🔹 CONFIGURAÇÕES DE SESSÃO (para carrinho)
-// ==========================================
-builder.Services.AddDistributedMemoryCache(); // Armazena sessão na memória
+// Sessão
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromHours(1); // Sessão expira em 1h
+    options.IdleTimeout = TimeSpan.FromHours(1);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -36,7 +34,7 @@ builder.Services.AddSession(options =>
 var app = builder.Build();
 
 // ==========================================
-// 🔹 CONFIGURAÇÃO DO PIPELINE DE REQUISIÇÃO
+// 🔹 PIPELINE
 // ==========================================
 
 if (!app.Environment.IsDevelopment())
@@ -45,29 +43,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Redireciona HTTP → HTTPS
 app.UseHttpsRedirection();
-
-// Permite carregar arquivos estáticos (CSS, JS, imagens)
 app.UseStaticFiles();
 
-// Habilita o roteamento
 app.UseRouting();
 
-// ✅ Habilita sessão (necessário antes da autorização)
-app.UseSession();
-
-// (Opcional) Autorização
+app.UseSession(); // ✔ precisa vir antes da autorização
 app.UseAuthorization();
 
-// ==========================================
-// 🔹 CONFIGURAÇÃO DE ROTAS
-// ==========================================
-
-// Define a rota padrão — abre a página inicial
+// Rotas
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Executa a aplicação
 app.Run();

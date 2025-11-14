@@ -14,5 +14,7 @@ namespace AutoPecas.Data
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<CarrinhoItem> CarrinhoItens { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+
     }
 }
